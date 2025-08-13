@@ -21,9 +21,7 @@ export function ThemeProvider({
       <header>
         <Header />
       </header>
-      <main className={cn('container mx-auto px-4', containerClassName)}>
-        {children}
-      </main>
+      <main className={cn(containerClassName)}>{children}</main>
     </NextThemesProvider>
   );
 }
