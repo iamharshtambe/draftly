@@ -11,7 +11,7 @@ export default function Header() {
   const router = useRouter();
 
   return (
-    <header className="m-4 mx-auto w-full max-w-6xl rounded-full bg-white p-3 text-black">
+    <header className="sticky top-0 z-10 m-4 mx-auto w-full max-w-6xl rounded-full bg-white p-3 text-black">
       <div className="flex items-center justify-between">
         <div>
           <Link href="/">

@@ -1,11 +1,11 @@
 import { cn } from '@/lib/utils';
 
-export default function Container({
+export default function Conatiner({
   children,
   className,
 }: {
   children: React.ReactNode;
-  className: string;
+  className?: string;
 }) {
-  return <div className={cn(className)}>{children}</div>;
+  return <div className={cn('container', className)}>{children}</div>;
 }

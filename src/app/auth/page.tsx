@@ -1,3 +1,5 @@
+import AuthLayout from '@/components/auth/auth-layout';
+
 export default function Authentication() {
-  return <div>Authentication</div>;
+  return <AuthLayout />;
 }
