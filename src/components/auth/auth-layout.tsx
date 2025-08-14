@@ -6,8 +6,8 @@ import Register from './register';
 
 export default function AuthLayout() {
   return (
-    <div className="my-20 flex items-center justify-center">
-      <div className="h-[500px] w-[450px] rounded-2xl border border-white p-4">
+    <div className="mt-20 flex items-center justify-center">
+      <div className="mt-20 h-[500px] w-[450px] rounded-2xl border border-white p-4">
         <h1 className="my-3 text-center text-2xl font-semibold">Welcome!</h1>
 
         <Tabs defaultValue="login" className="text-black">

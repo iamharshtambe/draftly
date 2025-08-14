@@ -35,9 +35,17 @@ export default function Register() {
     },
   });
 
+  async function onSubmit(values: z.infer<typeof registerSchema>) {
+    setIsLoading(true);
+
+    try {
+      console.log(values);
+    } catch (error) {}
+  }
+
   return (
     <Form {...form}>
-      <form className="text-white">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="text-white">
         <FormField
           control={form.control}
           name="name"

@@ -24,17 +24,17 @@ export default function Login() {
     },
   });
 
-  // async function onSubmit(values: z.infer<typeof loginSchema>) {
-  //   setIsLoading(true);
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
+    setIsLoading(true);
 
-  //   try {
-  //     console.log(values);
-  //   } catch (error) {}
-  // }
+    try {
+      console.log(values);
+    } catch (error) {}
+  }
 
   return (
     <Form {...form}>
-      <form className="text-white">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="text-white">
         <FormField
           control={form.control}
           name="email"
