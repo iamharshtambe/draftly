@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form';
 import { Input } from '../ui/input';
+import { Button } from '../ui/button';
 
 const loginSchema = z.object({
   email: z.email('invlaid'),
@@ -22,6 +23,14 @@ export default function Login() {
       password: '',
     },
   });
+
+  // async function onSubmit(values: z.infer<typeof loginSchema>) {
+  //   setIsLoading(true);
+
+  //   try {
+  //     console.log(values);
+  //   } catch (error) {}
+  // }
 
   return (
     <Form {...form}>
@@ -47,13 +56,17 @@ export default function Login() {
               <FormControl>
                 <Input
                   type="password"
-                  placeholder="Enter your email"
+                  placeholder="Enter your password"
                   {...field}
                 />
               </FormControl>
             </FormItem>
           )}
         />
+
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? 'Signing In' : 'Sign In'}
+        </Button>
       </form>
     </Form>
   );
