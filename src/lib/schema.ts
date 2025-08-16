@@ -25,7 +25,8 @@ export const sessions = pgTable('sessions', {
 
   userId: varchar('user_id', { length: 255 })
     .references(() => users.id)
-    .notNull(),
+    .notNull()
+    .unique(),
 
   token: varchar('token', { length: 255 }).notNull().unique(),
 
@@ -34,6 +35,25 @@ export const sessions = pgTable('sessions', {
   ipAddress: varchar('ip_address', { length: 255 }),
 
   userAgent: text('user_agent'),
+
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export const accounts = pgTable('accounts', {
+  id: varchar('id', { length: 255 }).primaryKey(),
+
+  userId: varchar('user_id', { length: 255 })
+    .references(() => users.id)
+    .notNull()
+    .unique(),
+
+  accountId: varchar('account_id', { length: 255 }).notNull(),
+
+  providerId: varchar('provider_id', { length: 255 }).notNull(),
+
+  hashedPassword: text('hashed_password').notNull(),
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
 
