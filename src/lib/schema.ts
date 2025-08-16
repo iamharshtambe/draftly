@@ -1,6 +1,7 @@
 import {
   boolean,
   pgTable,
+  serial,
   text,
   timestamp,
   varchar,
@@ -20,13 +21,27 @@ export const users = pgTable('users', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
-export const sessions = pgTable('sessions', {
+export const accounts = pgTable('accounts', {
   id: varchar('id', { length: 255 }).primaryKey(),
 
   userId: varchar('user_id', { length: 255 })
     .references(() => users.id)
     .notNull()
-    .unique(),
+    .unique(), // one account per user (email/password only)
+
+  passwordHash: text('password_hash').notNull(),
+
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export const sessions = pgTable('sessions', {
+  id: varchar('id', { length: 255 }).primaryKey(),
+
+  userId: varchar('user_id', { length: 255 })
+    .references(() => users.id)
+    .notNull(), // removed .unique()
 
   token: varchar('token', { length: 255 }).notNull().unique(),
 
@@ -41,19 +56,20 @@ export const sessions = pgTable('sessions', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
-export const accounts = pgTable('accounts', {
-  id: varchar('id', { length: 255 }).primaryKey(),
+export const posts = pgTable('posts', {
+  id: serial('id').primaryKey(),
 
-  userId: varchar('user_id', { length: 255 })
+  title: varchar('title', { length: 255 }).notNull(),
+
+  description: varchar('description', { length: 255 }).notNull(),
+
+  slug: varchar('slug', { length: 255 }).notNull().unique(),
+
+  content: text('content').notNull(),
+
+  authorId: varchar('author_id', { length: 255 })
     .references(() => users.id)
-    .notNull()
-    .unique(),
-
-  accountId: varchar('account_id', { length: 255 }).notNull(),
-
-  providerId: varchar('provider_id', { length: 255 }).notNull(),
-
-  hashedPassword: text('hashed_password').notNull(),
+    .notNull(),
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
 
