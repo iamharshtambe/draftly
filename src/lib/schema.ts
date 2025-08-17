@@ -1,3 +1,4 @@
+import { relations } from 'drizzle-orm';
 import {
   boolean,
   pgTable,
@@ -27,7 +28,7 @@ export const accounts = pgTable('accounts', {
   userId: varchar('user_id', { length: 255 })
     .references(() => users.id)
     .notNull()
-    .unique(), // one account per user (email/password only)
+    .unique(),
 
   passwordHash: text('password_hash').notNull(),
 
@@ -75,3 +76,11 @@ export const posts = pgTable('posts', {
 
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
+
+// relations
+export const usersRelation = relations(posts, ({ one }) => ({
+  author: one(users, {
+    fields: [posts.authorId],
+    references: [users.id],
+  }),
+}));
