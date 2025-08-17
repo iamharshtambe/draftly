@@ -8,9 +8,9 @@ services:
     ports:
       - '5432:5432'
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: harsh
+      POSTGRES_PASSWORD: secret123
+      POSTGRES_DB: draftlydb
     volumes:
       - pgdata:/var/lib/postgresql/data
 
@@ -21,8 +21,8 @@ services:
     ports:
       - '5050:80'
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_DEFAULT_EMAIL: admin@draftly.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
     depends_on:
       - postgres
 
