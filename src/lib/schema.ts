@@ -77,10 +77,30 @@ export const posts = pgTable('posts', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
-// relations
 export const usersRelation = relations(posts, ({ one }) => ({
   author: one(users, {
     fields: [posts.authorId],
+    references: [users.id],
+  }),
+}));
+
+export const postsRelation = relations(posts, ({ one }) => ({
+  author: one(users, {
+    fields: [posts.authorId],
+    references: [users.id],
+  }),
+}));
+
+export const accountsRelation = relations(accounts, ({ one }) => ({
+  user: one(users, {
+    fields: [accounts.userId],
+    references: [users.id],
+  }),
+}));
+
+export const sessionsRelation = relations(sessions, ({ one }) => ({
+  user: one(users, {
+    fields: [sessions.userId],
     references: [users.id],
   }),
 }));
