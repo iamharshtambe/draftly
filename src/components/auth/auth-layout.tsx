@@ -3,8 +3,11 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Login from './login';
 import Register from './register';
+import { useState } from 'react';
 
 export default function AuthLayout() {
+  const [activeTab, setActiveTab] = useState('login');
+
   return (
     <div className="mt-20 flex items-center justify-center">
       <div className="mt-20 h-[500px] w-[450px] rounded-2xl border border-white p-4">
@@ -19,7 +22,7 @@ export default function AuthLayout() {
             <Login />
           </TabsContent>
           <TabsContent value="register">
-            <Register />
+            <Register onSuccess={() => setActiveTab('login')} />
           </TabsContent>
         </Tabs>
       </div>

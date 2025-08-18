@@ -14,6 +14,8 @@ import {
 import { Input } from '../ui/input';
 import { useState } from 'react';
 import { Button } from '../ui/button';
+import { signUp } from '@/lib/auth-client';
+import { toast } from 'sonner';
 
 const registerSchema = z
   .object({
@@ -29,7 +31,7 @@ const registerSchema = z
     path: ['confirmPassword'],
   });
 
-export default function Register() {
+export default function Register({ onSuccess }: { onSuccess: () => void }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -46,8 +48,22 @@ export default function Register() {
     setIsLoading(true);
 
     try {
-      console.log(values);
-    } catch (error) {}
+      await signUp.email({
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      });
+
+      toast('Your account has been created successfully! Please sign in.');
+
+      if (onSuccess) {
+        onSuccess();
+      }
+    } catch (err: any) {
+      toast(err.message || 'Failed to create account. Please try again later');
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
