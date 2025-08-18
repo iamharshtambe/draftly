@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { email, z } from 'zod';
 import {
   Form,
   FormControl,
@@ -14,6 +14,9 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { signIn } from '@/lib/auth-client';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const loginSchema = z.object({
   email: z.email('invlaid'),
@@ -21,6 +24,7 @@ const loginSchema = z.object({
 });
 
 export default function Login() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -35,8 +39,19 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      console.log(values);
-    } catch (error) {}
+      await signIn.email({
+        email: values.email,
+        password: values.password,
+        rememberMe: true,
+      });
+
+      toast('Login success!');
+      router.push('/');
+    } catch (err: any) {
+      toast(err.message || 'Login failed! Please try again later');
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
